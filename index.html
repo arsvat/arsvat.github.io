@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Win VPN — Приватность и Безопасность</title>
+    <title>Win VPN — Официальный сайт сервиса</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #ffffff;
@@ -16,15 +17,15 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         .card {
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.1); }
         .modal {
             display: none;
             position: fixed;
@@ -33,6 +34,18 @@
             z-index: 1000;
             overflow-y: auto;
             padding: 2rem;
+        }
+        .step-number {
+            background: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -44,47 +57,76 @@
             <div class="inline-block p-4 bg-orange-100 rounded-3xl mb-4">
                 <span class="text-4xl">🛡️</span>
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tight">Win VPN Premium</h1>
-            <p class="text-slate-500 mt-2 text-sm uppercase tracking-widest font-semibold">Ваша цифровая крепость</p>
+            <h1 class="text-4xl font-extrabold tracking-tight">Win VPN</h1>
+            <p class="text-slate-500 mt-2 text-sm uppercase tracking-widest font-bold">Личная цифровая безопасность</p>
         </header>
 
         <section class="space-y-4 mb-12">
-            <h2 class="text-xl font-bold px-2">Выберите подписку:</h2>
+            <h2 class="text-xl font-bold px-2 mb-4">Выберите период доступа:</h2>
             
-            <div onclick="handleSelect('1_month', 100)" class="card p-6 flex justify-between items-center cursor-pointer">
-                <div><h3 class="font-bold text-lg">1 Месяц</h3><p class="text-xs text-slate-400">До 5 устройств</p></div>
+            <div onclick="handleSelect('1_month', 100)" class="card p-6 flex justify-between items-center cursor-pointer shadow-sm">
+                <div><h3 class="font-bold text-lg">1 Месяц</h3><p class="text-xs text-slate-400">Базовый доступ</p></div>
                 <div class="text-right"><span class="text-xl font-black text-orange-600">100 ₽</span></div>
             </div>
 
-            <div onclick="handleSelect('3_months', 250)" class="card p-6 flex justify-between items-center cursor-pointer border-2 border-orange-500 bg-orange-50/30">
-                <div><h3 class="font-bold text-lg">3 Месяца</h3><p class="text-xs text-slate-400">Популярный выбор</p></div>
+            <div onclick="handleSelect('3_months', 250)" class="card p-6 flex justify-between items-center cursor-pointer border-2 border-orange-500 bg-orange-50/30 shadow-md">
+                <div class="relative">
+                    <span class="absolute -top-10 left-0 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase">Популярный выбор</span>
+                    <h3 class="font-bold text-lg">3 Месяца</h3>
+                    <p class="text-xs text-slate-400">Оптимально для работы</p>
+                </div>
                 <div class="text-right"><span class="text-xl font-black text-orange-600">250 ₽</span></div>
             </div>
 
-            <div onclick="handleSelect('1_year', 500)" class="card p-6 flex justify-between items-center cursor-pointer">
-                <div><h3 class="font-bold text-lg">1 Год</h3><p class="text-xs text-green-600 font-bold uppercase">Экономия 50%</p></div>
+            <div onclick="handleSelect('1_year', 500)" class="card p-6 flex justify-between items-center cursor-pointer shadow-sm">
+                <div><h3 class="font-bold text-lg">1 Год</h3><p class="text-xs text-green-600 font-bold">Выгода до 50%</p></div>
                 <div class="text-right"><span class="text-xl font-black text-orange-600">500 ₽</span></div>
             </div>
         </section>
 
         <section class="bg-white rounded-3xl p-6 mb-8 border border-slate-100 shadow-sm">
-            <h2 class="text-lg font-bold mb-4">Почему Win VPN?</h2>
-            <ul class="space-y-3 text-sm text-slate-600">
-                <li class="flex items-center">✅ <span class="ml-2">Шифрование военного уровня (AES-256)</span></li>
-                <li class="flex items-center">✅ <span class="ml-2">Отсутствие логов активности пользователей</span></li>
-                <li class="flex items-center">✅ <span class="ml-2">Стабильная скорость до 1 Гбит/с</span></li>
-                <li class="flex items-center">✅ <span class="ml-2">Мгновенная доставка доступа в Telegram</span></li>
-            </ul>
+            <h2 class="text-lg font-bold mb-6">Как пользоваться сервисом?</h2>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="step-number">1</div>
+                    <p class="text-sm text-slate-600">Выберите подходящий тариф выше и оплатите его удобным способом через систему Lava.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="step-number">2</div>
+                    <p class="text-sm text-slate-600">Наш бот моментально пришлет вам персональный ключ доступа и ссылку на приложение.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="step-number">3</div>
+                    <p class="text-sm text-slate-600">Скопируйте ключ в приложение и активируйте защиту в один клик.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-slate-100 p-4 rounded-2xl text-center">
+                <div class="text-xl mb-1">🚀</div>
+                <div class="text-[10px] font-bold uppercase text-slate-500">Скорость</div>
+                <div class="text-sm font-bold">до 1 Гбит/с</div>
+            </div>
+            <div class="bg-slate-100 p-4 rounded-2xl text-center">
+                <div class="text-xl mb-1">🌍</div>
+                <div class="text-[10px] font-bold uppercase text-slate-500">Локации</div>
+                <div class="text-sm font-bold">Европа и Азия</div>
+            </div>
         </section>
 
         <section class="space-y-2 mb-12">
             <h2 class="text-lg font-bold px-2 mb-4">Частые вопросы</h2>
-            <div class="bg-white p-4 rounded-2xl text-sm border border-slate-100">
-                <p class="font-bold">Как я получу доступ?</p>
-                <p class="text-slate-500 mb-3">Сразу после оплаты в бот придет ключ и инструкция по настройке.</p>
-                
-                <p class="font-bold">Есть ли возврат?</p>
-                <p class="text-slate-500">В связи с предоставлением цифрового контента, возврат средств возможен только в случае технической неисправности на нашей стороне.</p>
+            <div class="bg-white p-5 rounded-3xl text-sm border border-slate-100 shadow-sm space-y-4">
+                <div>
+                    <p class="font-bold text-slate-800">Безопасно ли это?</p>
+                    <p class="text-slate-500">Да, мы используем современные протоколы шифрования, которые защищают ваши данные от перехвата в общественном Wi-Fi.</p>
+                </div>
+                <hr class="border-slate-50">
+                <div>
+                    <p class="font-bold text-slate-800">На каких устройствах работает?</p>
+                    <p class="text-slate-500">Win VPN поддерживает смартфоны (iOS/Android), планшеты и персональные компьютеры.</p>
+                </div>
             </div>
         </section>
 
@@ -95,50 +137,65 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Mir-logo.svg" width="45" alt="MIR">
             </div>
 
-            <div class="text-[10px] text-slate-400 uppercase tracking-widest leading-relaxed">
-                Индивидуальный предприниматель [ВАШЕ Ватыкин Андрей Валерьевич / win VPN]<br>
-                Поддержка пользователей: <a href="https://t.me/arsvat2" class="text-orange-500 underline font-bold">@arsvar2</a><br>
-                Email: zhenya.vovan@bk.ru
+            <div class="text-[10px] text-slate-400 uppercase tracking-widest leading-relaxed font-medium">
+                Win VPN Digital Services<br>
+                Поддержка: <a href="https://t.me/arsvar2" class="text-orange-500 underline font-bold">@arsvar2</a><br>
+                Рабочее время: Пн-Вс 10:00 — 22:00 (МСК)
             </div>
 
             <div class="flex justify-center gap-4 text-[11px] font-bold text-slate-500">
-                <span onclick="openModal('oferta')" class="cursor-pointer underline">Оферта</span>
-                <span onclick="openModal('privacy')" class="cursor-pointer underline">Приватность</span>
+                <span onclick="openModal('oferta')" class="cursor-pointer underline decoration-slate-300">Оферта</span>
+                <span onclick="openModal('privacy')" class="cursor-pointer underline decoration-slate-300">Приватность</span>
             </div>
         </footer>
     </div>
 
     <div id="modal" class="modal">
-        <button onclick="closeModal()" class="text-orange-500 font-bold mb-6">✕ ЗАКРЫТЬ</button>
-        <div id="modal-content" class="text-sm leading-relaxed text-slate-700">
-            </div>
+        <button onclick="closeModal()" class="text-orange-500 font-bold mb-6 flex items-center">
+            <span class="mr-2">←</span> НАЗАД
+        </button>
+        <div id="modal-content" class="text-sm leading-relaxed text-slate-700 pb-10">
+        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
+        tg.expand();
 
         function handleSelect(plan, price) {
             tg.HapticFeedback.impactOccurred('medium');
-            // Если открыто как WebApp, шлем данные боту
             if (tg.initData) {
-                tg.sendData(JSON.stringify({ plan: plan, price: price }));
+                tg.sendData(JSON.stringify({ plan: plan, price_rub: price }));
             } else {
-                alert('Для оплаты перейдите в нашего Telegram бота!');
+                alert('Пожалуйста, откройте сервис через официальный Telegram бот!');
             }
         }
 
         function openModal(type) {
             const content = {
-                oferta: `<h2 class="text-xl font-bold mb-4">Публичная оферта</h2>
-                         <p>Данный документ является предложением сервиса Win VPN заключить договор на оказание услуг по предоставлению доступа к сети VPN...</p>
-                         <p class="mt-4"><strong>Возврат:</strong> Цифровые товары не подлежат возврату после активации ключа.</p>
-                         <p class="mt-4"><strong>Оплата:</strong> Обрабатывается через защищенный шлюз Lava.ru.</p>`,
-                privacy: `<h2 class="text-xl font-bold mb-4">Политика конфиденциальности</h2>
-                          <p>Мы собираем только ваш Telegram ID для привязки подписки. Мы не храним данные о ваших посещениях и не передаем их третьим лицам.</p>`
+                oferta: `
+                    <h2 class="text-2xl font-black mb-6">Публичная оферта</h2>
+                    <div class="space-y-4">
+                        <p><strong>1. Общие положения:</strong> Настоящий документ является публичным предложением сервиса "Win VPN" (далее — Исполнитель) предоставить услуги по организации защищенного канала передачи данных.</p>
+                        <p><strong>2. Предмет договора:</strong> Исполнитель предоставляет Пользователю доступ к серверной инфраструктуре посредством передачи цифрового ключа (конфигурации) после оплаты тарифа.</p>
+                        <p><strong>3. Порядок оплаты:</strong> Оплата производится в рублях РФ через платежный агрегатор Lava. Доступ предоставляется автоматически в течение 5 минут после подтверждения транзакции.</p>
+                        <p><strong>4. Политика возврата:</strong> Согласно ст. 26.1 Закона о защите прав потребителей, цифровые услуги надлежащего качества после предоставления доступа возврату не подлежат. Если доступ не был предоставлен по вине Исполнителя, возврат осуществляется в полном объеме через обращение в поддержку @arsvar2.</p>
+                    </div>`,
+                privacy: `
+                    <h2 class="text-2xl font-black mb-6">Приватность</h2>
+                    <div class="space-y-4">
+                        <p>Мы уважаем вашу анонимность. Win VPN придерживается политики "No-Logs":</p>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Мы не храним историю ваших посещений.</li>
+                            <li>Мы не записываем ваш реальный IP-адрес.</li>
+                            <li>Для работы сервиса нам необходим только ваш Telegram ID для идентификации подписки.</li>
+                        </ul>
+                    </div>`
             };
             document.getElementById('modal-content').innerHTML = content[type];
             document.getElementById('modal').style.display = 'block';
+            window.scrollTo(0, 0);
         }
 
         function closeModal() {
