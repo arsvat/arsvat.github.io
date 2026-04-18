@@ -6,123 +6,137 @@
     <title>Win VPN — Premium Edition</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #f97316;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #f97316; /* Рыжий цвет */
         }
         body {
             background-color: #000000;
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* Анимированный черно-рыжий фон */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 50% -20%, #442200, #000000 70%);
         }
-        .card:active {
-            transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.1);
+
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            filter: blur(80px);
+            z-index: -1;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 30%); }
+        }
+
+        /* Жидкое стекло */
+        .liquid-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .liquid-card:active {
+            transform: scale(0.97);
+            background: rgba(249, 115, 22, 0.08);
             border-color: var(--accent);
         }
-        .premium-card {
-            border: 1px solid var(--accent) !important;
-            background: rgba(249, 115, 22, 0.05);
+
+        .premium-border {
+            border: 1px solid rgba(249, 115, 22, 0.4) !important;
+            box-shadow: 0 0 25px rgba(249, 115, 22, 0.1);
         }
-        .modal {
+
+        #modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: #000000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(30px);
             z-index: 1000;
-            overflow-y: auto;
             padding: 2rem;
-        }
-        .step-pill {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1rem;
+            overflow-y: auto;
         }
     </style>
 </head>
-<body class="p-4">
+<body class="p-6">
 
-    <div class="max-w-xl mx-auto py-6">
+    <div class="bg-glow"></div>
+    <div class="blob"></div>
+
+    <div class="max-w-md mx-auto">
         
-        <header class="text-center mb-10">
-            <div class="inline-block p-4 bg-orange-500/10 rounded-[32px] mb-4 border border-orange-500/20">
-                <span class="text-4xl">🛡️</span>
+        <header class="text-center mb-12 mt-4">
+            <div class="inline-block relative mb-4">
+                <div class="absolute inset-0 bg-orange-500 blur-3xl opacity-20"></div>
+                <div class="relative w-20 h-20 liquid-card flex items-center justify-center border-white/20">
+                    <span class="text-4xl">🛡️</span>
+                </div>
             </div>
             <h1 class="text-4xl font-extrabold tracking-tighter italic uppercase">Win VPN</h1>
-            <p class="text-white/40 mt-2 text-[10px] uppercase tracking-[0.3em] font-black">Private Security System</p>
+            <p class="text-orange-500/50 text-[10px] font-black tracking-[0.4em] mt-2 uppercase">Secure Access System</p>
         </header>
 
         <section class="space-y-4 mb-10">
-            <h2 class="text-lg font-bold px-2 text-white/80">Выберите подписку:</h2>
+            <h2 class="text-sm font-black uppercase tracking-widest text-white/40 px-2">Выберите период</h2>
             
-            <div onclick="redirectToBot('1_month')" class="card p-6 flex justify-between items-center cursor-pointer">
+            <div onclick="redirectToBot('1_month')" class="liquid-card p-6 flex justify-between items-center cursor-pointer">
                 <div>
-                    <h3 class="font-bold text-lg">1 МЕСЯЦ</h3>
-                    <p class="text-[10px] text-white/40 uppercase tracking-widest">Base Access</p>
+                    <h3 class="text-lg font-bold italic uppercase">1 Месяц</h3>
+                    <p class="text-[10px] text-white/30 uppercase tracking-widest">Single Pass</p>
                 </div>
-                <div class="text-right">
-                    <span class="text-2xl font-black italic">100 ₽</span>
-                </div>
+                <div class="text-2xl font-black italic">100 ₽</div>
             </div>
 
-            <div onclick="redirectToBot('3_months')" class="card p-6 flex justify-between items-center cursor-pointer premium-card relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-orange-500 text-[9px] px-3 py-1 font-black uppercase rounded-bl-xl tracking-tighter">HOT</div>
+            <div onclick="redirectToBot('3_months')" class="liquid-card p-7 flex justify-between items-center cursor-pointer premium-border relative">
+                <div class="absolute -top-3 left-6 bg-orange-600 text-[9px] px-3 py-1 rounded-full font-black uppercase shadow-lg">HOT</div>
                 <div>
-                    <h3 class="font-bold text-lg text-orange-500">3 МЕСЯЦА</h3>
-                    <p class="text-[10px] text-orange-500/50 uppercase tracking-widest">Most Popular</p>
+                    <h3 class="text-lg font-bold italic uppercase text-orange-500">3 Месяца</h3>
+                    <p class="text-[10px] text-orange-500/40 uppercase tracking-widest">Most Popular</p>
                 </div>
-                <div class="text-right">
-                    <span class="text-2xl font-black italic text-orange-500">250 ₽</span>
-                </div>
+                <div class="text-2xl font-black italic text-orange-500">250 ₽</div>
             </div>
 
-            <div onclick="redirectToBot('1_year')" class="card p-6 flex justify-between items-center cursor-pointer">
+            <div onclick="redirectToBot('1_year')" class="liquid-card p-6 flex justify-between items-center cursor-pointer">
                 <div>
-                    <h3 class="font-bold text-lg">1 ГОД</h3>
+                    <h3 class="text-lg font-bold italic uppercase">1 Год</h3>
                     <p class="text-[10px] text-green-500 font-bold uppercase tracking-widest">Save 50%</p>
                 </div>
-                <div class="text-right">
-                    <span class="text-2xl font-black italic">500 ₽</span>
-                </div>
+                <div class="text-2xl font-black italic">500 ₽</div>
             </div>
         </section>
 
-        <section class="space-y-3 mb-10">
-            <div class="step-pill flex items-center gap-4">
-                <div class="text-orange-500 font-black text-xl italic">01.</div>
-                <p class="text-xs text-white/60">Выберите тариф и оплатите через <span class="text-white font-bold">Lava</span>.</p>
-            </div>
-            <div class="step-pill flex items-center gap-4">
-                <div class="text-orange-500 font-black text-xl italic">02.</div>
-                <p class="text-xs text-white/60">Получите ключ в боте <span class="text-white font-bold">@WinVPN1_bot</span>.</p>
-            </div>
-        </section>
-
-        <section class="mb-10 px-2">
-            <div class="border-t border-white/10 pt-6 space-y-4">
-                <div class="flex justify-between items-center opacity-50">
-                    <span class="text-[10px] font-black uppercase tracking-widest">Speed Limit</span>
-                    <span class="text-xs font-bold italic">1 Gbps</span>
+        <div class="liquid-card p-6 mb-10">
+            <h4 class="text-xs font-black uppercase tracking-widest text-white/40 mb-4">Преимущества</h4>
+            <div class="space-y-3 text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="text-orange-500">✦</span> <span>Скорость до 1 Гбит/с</span>
                 </div>
-                <div class="flex justify-between items-center opacity-50">
-                    <span class="text-[10px] font-black uppercase tracking-widest">Encryption</span>
-                    <span class="text-xs font-bold italic">AES-256</span>
+                <div class="flex items-center gap-3">
+                    <span class="text-orange-500">✦</span> <span>Ключ мгновенно в @WinVPN1_bot</span>
                 </div>
             </div>
-        </section>
+        </div>
 
         <footer class="text-center space-y-8 pb-10">
             <div class="flex justify-center gap-8 opacity-20 grayscale invert">
@@ -130,23 +144,23 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Mir-logo.svg" width="40">
             </div>
 
-            <div class="text-[9px] text-white/30 uppercase tracking-[0.2em] font-bold">
+            <div class="text-[9px] text-white/30 uppercase tracking-[0.3em] leading-relaxed">
                 Win VPN Digital Solutions<br>
-                Admin Support: <a href="https://t.me/arsvat2" class="text-orange-500 underline">@arsvat2</a>
+                Admin: <a href="https://t.me/arsvat2" class="text-orange-500">@arsvat2</a>
             </div>
 
             <div class="flex justify-center gap-6 text-[10px] font-black text-white/40 uppercase">
-                <span onclick="openModal('oferta')" class="cursor-pointer hover:text-white underline decoration-white/10">Оферта</span>
-                <span onclick="openModal('privacy')" class="cursor-pointer hover:text-white underline decoration-white/10">Приватность</span>
+                <span onclick="openModal('oferta')" class="cursor-pointer underline decoration-white/10">Оферта</span>
+                <span onclick="openModal('privacy')" class="cursor-pointer underline decoration-white/10">Приватность</span>
             </div>
         </footer>
     </div>
 
-    <div id="modal" class="modal">
+    <div id="modal">
         <button onclick="closeModal()" class="text-orange-500 font-black tracking-widest text-xs mb-10 flex items-center">
             <span class="text-xl mr-2">←</span> НАЗАД
         </button>
-        <div id="modal-content" class="text-sm leading-relaxed text-white/70 space-y-6"></div>
+        <div id="modal-content" class="text-sm text-white/70 leading-relaxed space-y-4"></div>
     </div>
 
     <script>
@@ -156,11 +170,10 @@
         tg.setHeaderColor('#000000');
 
         function redirectToBot(plan) {
-            tg.HapticFeedback.impactOccurred('medium');
-            // Переадресация в вашего бота
+            tg.HapticFeedback.impactOccurred('heavy');
             setTimeout(() => {
                 tg.openTelegramLink('https://t.me/WinVPN1_bot?start=buy_' + plan);
-            }, 100);
+            }, 150);
         }
 
         function openModal(type) {
@@ -168,21 +181,13 @@
                 oferta: `
                     <h2 class="text-2xl font-black italic uppercase text-white mb-6">Публичная оферта</h2>
                     <div class="space-y-4">
-                        <p><strong>1. Предмет:</strong> Предоставление доступа к серверной инфраструктуре Win VPN через цифровой ключ.</p>
-                        <p><strong>2. Оплата:</strong> Платежи принимаются через Lava. Доставка ключа — моментально в Telegram.</p>
-                        <p><strong>3. Возврат (ст. 26.1 ЗоЗПП):</strong> Цифровые товары надлежащего качества возврату не подлежат, так как услуга считается оказанной в момент передачи ключа доступа.</p>
-                        <p><strong>4. Поддержка:</strong> По всем вопросам обращаться к @arsvar2.</p>
+                        <p><strong>1. Предмет:</strong> Услуги цифрового доступа к VPN серверам.</p>
+                        <p><strong>2. Возврат (ст. 26.1 ЗоЗПП):</strong> Цифровой товар поставляется в виде ключа доступа. Согласно ст. 26.1 ЗоЗПП, возврат после получения ключа невозможен.</p>
+                        <p><strong>3. Оплата:</strong> Через защищенный шлюз Lava.</p>
                     </div>`,
                 privacy: `
                     <h2 class="text-2xl font-black italic uppercase text-white mb-6">Приватность</h2>
-                    <div class="space-y-4">
-                        <p>Мы придерживаемся политики No-Logs:</p>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li>Ваш трафик не анализируется и не записывается.</li>
-                            <li>Мы не храним историю посещений.</li>
-                            <li>Ваш Telegram ID используется только для привязки подписки.</li>
-                        </ul>
-                    </div>`
+                    <p>Мы используем политику No-Logs. Ваши данные не хранятся и не передаются третьим лицам.</p>`
             };
             document.getElementById('modal-content').innerHTML = content[type];
             document.getElementById('modal').style.display = 'block';
