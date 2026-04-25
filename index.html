@@ -2,193 +2,147 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Win VPN — Global Secure Systems</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Win VPN — Global Secure Access</title>
     <style>
-        :root { --accent: #f97316; }
-        body { background-color: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 20px; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
-        .ambient-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% -20%, #331a00, #000 80%); }
+        :root { 
+            --accent: #00ffcc; 
+            --glass: rgba(255, 255, 255, 0.05); 
+            --border: rgba(255, 255, 255, 0.1); 
+        }
         
-        /* Логика переключения языков через CSS (самая надежная) */
-        .lang-ru .en, .lang-ru .cn { display: none !important; }
-        .lang-en .ru, .lang-en .cn { display: none !important; }
-        .lang-cn .ru, .lang-cn .en { display: none !important; }
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+            background: #000; color: #fff; overflow-x: hidden;
+        }
 
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 28px; transition: 0.3s; }
-        .active-plan { border-color: var(--accent); background: rgba(249, 115, 22, 0.05); }
-        .lang-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 800; }
-        .lang-btn.active { background: var(--accent) !important; border-color: var(--accent) !important; }
-        #modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 40px 20px; overflow-y: auto; }
-        
-        /* Оформление юридического текста */
-        .legal-text h2 { color: #fff; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; font-size: 1.25rem; }
-        .legal-text h3 { color: var(--accent); font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; text-transform: uppercase; }
-        .legal-text p { margin-bottom: 1rem; opacity: 0.8; line-height: 1.6; }
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 40px);
+            background-size: 300px 300px; z-index: -1; opacity: 0.5;
+        }
+
+        /* Переключатель языков */
+        .lang-switcher {
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 5px; border-radius: 12px; backdrop-filter: blur(10px);
+        }
+        .lang-btn {
+            background: none; border: none; color: #666; cursor: pointer;
+            padding: 8px 12px; font-weight: bold; transition: 0.3s;
+        }
+        .lang-btn.active { color: var(--accent); }
+
+        /* Окно регистрации */
+        #authOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(40px);
+            z-index: 5000; display: flex; align-items: center; justify-content: center;
+        }
+        .auth-card {
+            padding: 40px; width: 360px; text-align: center; border-radius: 35px;
+            background: var(--glass); border: 1px solid var(--border);
+        }
+        .auth-card img { width: 90px; border-radius: 50%; margin-bottom: 20px; border: 1px solid var(--border); }
+        .auth-card input {
+            width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px;
+            border: 1px solid var(--border); background: rgba(0,0,0,0.4); color: #fff; outline: none;
+        }
+        .auth-btn {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: #fff; color: #000; font-weight: 800; cursor: pointer; margin-top: 15px;
+        }
+
+        /* Основной контент */
+        #mainContent { filter: blur(40px); transition: 1.2s; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        .logo-main { width: 160px; height: 160px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 30px; }
+
+        .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+        .spec-card { padding: 25px; border-radius: 20px; background: var(--glass); border: 1px solid var(--border); }
+        .spec-card strong { display: block; font-size: 1.4rem; color: var(--accent); }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { padding: 45px; border-radius: 30px; background: var(--glass); border: 1px solid var(--border); transition: 0.4s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .price { font-size: 2.8rem; font-weight: 900; margin: 20px 0; }
+        .buy-btn { display: block; padding: 16px; border-radius: 14px; background: #fff; color: #000; text-decoration: none; font-weight: bold; }
+
+        /* Модалки */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 6000; overflow-y: auto; padding: 40px 0; }
+        .modal-inner { max-width: 800px; margin: 0 auto; padding: 40px; background: #0a0a0a; border: 1px solid var(--border); border-radius: 30px; text-align: left; }footer { padding: 60px; text-align: center; border-top: 1px solid var(--border); margin-top: 50px; }
+        .footer-links span { cursor: pointer; margin: 0 15px; color: #666; font-size: 0.9rem; }
     </style>
 </head>
-<body class="lang-ru">
-    <div class="ambient-bg"></div>
+<body>
 
-    <div class="max-w-md mx-auto">
-        <div class="flex justify-center gap-2 mb-10">
-            <button onclick="setL('ru', this)" class="lang-btn active">RU</button>
-            <button onclick="setL('en', this)" class="lang-btn">EN</button>
-            <button onclick="setL('cn', this)" class="lang-btn">CN</button>
+    <div class="stars"></div>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+
+    <div id="authOverlay">
+        <div class="auth-card">
+            <img src="1000007216.jpg">
+            <h2 id="t-auth-title">Win VPN</h2>
+            
+            <div id="regFields">
+                <input type="email" id="email" placeholder="Почта">
+                <input type="text" id="user" placeholder="Логин">
+                <input type="password" id="pass" placeholder="Пароль">
+                <button class="auth-btn" id="t-reg-btn" onclick="submitReg()">Зарегистрироваться</button>
+            </div>
+
+            <div id="waitingStep" style="display:none;">
+                <p id="t-wait-status" style="color: var(--accent); font-weight: bold;">Заявка принята!</p>
+                <p id="t-wait-desc" style="font-size: 0.9rem; color: #ccc;">Напишите администратору для активации:</p>
+                <a href="https://t.me/arsvat2" class="auth-btn" style="display:block; text-decoration:none; text-align:center; background:#24A1DE; color:#fff;">Telegram</a>
+                <button class="auth-btn" style="background:transparent; color:#666;" onclick="closeAuth()" id="t-skip">Пропустить</button>
+            </div>
         </div>
+    </div>
 
-        <header class="text-center mb-10">
-            <div class="w-20 h-20 glass-card flex items-center justify-center mx-auto mb-4 border-white/10">
-                <span class="text-4xl">🛡️</span>
-            </div>
-            <h1 class="text-4xl font-extrabold italic uppercase tracking-tighter">Win VPN</h1>
-            <p class="ru text-orange-500/60 text-[10px] font-black tracking-[0.3em] uppercase mt-2">Цифровая безопасность</p>
-            <p class="en text-orange-500/60 text-[10px] font-black tracking-[0.3em] uppercase mt-2">Digital Security</p>
-            <p class="cn text-orange-500/60 text-[10px] font-black tracking-[0.3em] uppercase mt-2">数字安全系统</p>
-        </header>
-
-        <div class="space-y-4 mb-10">
-            <div onclick="go('1_month')" class="glass-card p-6 flex justify-between items-center cursor-pointer">
-                <div>
-                    <span class="ru font-bold italic uppercase">1 Месяц</span><span class="en font-bold italic uppercase">1 Month</span><span class="cn font-bold italic uppercase">1 个月</span>
-                    <p class="ru text-[10px] opacity-30">СТАНДАРТ</p><p class="en text-[10px] opacity-30">STANDARD</p><p class="cn text-[10px] opacity-30">标准版</p>
-                </div>
-                <div class="text-2xl font-black italic">
-                    <span class="ru">100 ₽</span><span class="en">$1.20</span><span class="cn">¥8.50</span>
-                </div>
+    <div id="mainContent">
+        <div class="container">
+            <img src="1000007216.jpg" class="logo-main">
+            <h1 id="t-main-title">Win VPN</h1>
+            <div class="specs">
+                <div class="spec-card"><strong id="t-s1-v">1 Гбит/с</strong><span id="t-s1-n">Скорость</span></div>
+                <div class="spec-card"><strong id="t-s2-v">20-40 мс</strong><span id="t-s2-n">Пинг</span></div>
+                <div class="spec-card"><strong id="t-s3-v">Глобально</strong><span id="t-s3-n">Локации</span></div>
             </div>
 
-            <div onclick="go('3_months')" class="glass-card p-7 flex justify-between items-center cursor-pointer active-plan relative">
-                <div class="absolute -top-3 left-6 bg-orange-600 text-[9px] px-3 py-1 rounded-full font-black uppercase">
-                    <span class="ru">Популярно</span><span class="en">Popular</span><span class="cn">热门推荐</span>
-                </div>
-                <div>
-                    <span class="ru font-bold italic uppercase text-orange-500">3 Месяца</span><span class="en font-bold italic uppercase text-orange-500">3 Months</span><span class="cn font-bold italic uppercase text-orange-500">3 个月</span>
-                    <p class="ru text-[10px] text-orange-500/40">ПРЕМИУМ</p><p class="en text-[10px] text-orange-500/40">PREMIUM</p><p class="cn text-[10px] text-orange-500/40">高级版</p>
-                </div>
-                <div class="text-2xl font-black italic text-orange-500">
-                    <span class="ru">250 ₽</span><span class="en">$3.00</span><span class="cn">¥21.00</span>
-                </div>
-            </div>
-
-            <div onclick="go('1_year')" class="glass-card p-6 flex justify-between items-center cursor-pointer">
-                <div>
-                    <span class="ru font-bold italic uppercase text-green-500">1 Год</span><span class="en font-bold italic uppercase text-green-500">1 Year</span><span class="cn font-bold italic uppercase text-green-500">1 年</span>
-                    <p class="ru text-[10px] text-green-500/50 uppercase">Скидка -50%</p><p class="en text-[10px] text-green-500/50 uppercase">Save 50%</p><p class="cn text-[10px] text-green-500/50 uppercase">节省 50%</p>
-                </div>
-                <div class="text-2xl font-black italic">
-                    <span class="ru">500 ₽</span><span class="en">$6.00</span><span class="cn">¥42.00</span>
-                </div>
+            <div class="pricing-grid">
+                <div class="card"><h3 id="t-p1-n">1 Месяц</h3><div class="price">150 ₽</div><a href="https://t.me/arsvat2" class="buy-btn" id="t-b1">Выбрать</a></div>
+                <div class="card" style="border-color: var(--accent);"><h3 id="t-p2-n">3 Месяца</h3><div class="price">270 ₽</div><a href="https://t.me/arsvat2" class="buy-btn" id="t-b2" style="background: var(--accent);">Выбрать</a></div>
+                <div class="card"><h3 id="t-p3-n">1 Год</h3><div class="price">1200 ₽</div><a href="https://t.me/arsvat2" class="buy-btn" id="t-b3">Выбрать</a></div>
             </div>
         </div>
 
-        <div class="glass-card p-6 mb-10 text-center">
-            <h3 class="ru text-[10px] font-black uppercase text-white/30 mb-3 tracking-widest">Поддержка пользователей</h3>
-            <h3 class="en text-[10px] font-black uppercase text-white/30 mb-3 tracking-widest">User Support</h3>
-            <h3 class="cn text-[10px] font-black uppercase text-white/30 mb-3 tracking-widest">用户支持</h3>
-            <div class="text-xs font-bold space-y-2">
-                <a href="https://t.me/arsvat2" class="block text-orange-500 underline underline-offset-4">Telegram: @arsvat2</a>
-                <a href="mailto:zhenya.vovan@bk.ru" class="block text-white/60">zhenya.vovan@bk.ru</a>
+        <footer>
+            <div class="footer-links">
+                <span onclick="show('of')" id="t-f1">Оферта</span>
+                <span onclick="show('pr')" id="t-f2">Приватность</span>
+                <span onclick="show('rf')" id="t-f3">Возврат</span>
             </div>
-        </div>
-
-        <footer class="text-center space-y-6 pb-10">
-            <div class="flex justify-center gap-6 text-[10px] font-black text-white/40 uppercase">
-                <span onclick="openM('o')" class="cursor-pointer underline italic">Оферта / Terms</span>
-                <span onclick="openM('p')" class="cursor-pointer underline italic">Privacy</span>
-            </div>
-            <div class="text-[8px] text-white/10 uppercase tracking-[0.4em]">Win VPN Digital • 2026</div>
+            <p style="color: #666; margin-top: 20px;">Support: @arsvat2 | zhenya.vovan@bk.ru</p>
         </footer>
     </div>
 
-    <div id="modal">
-        <button onclick="closeM()" class="text-orange-500 font-black mb-8 text-sm flex items-center">
-            <span class="mr-2">←</span> <span class="ru">НАЗАД</span><span class="en">BACK</span><span class="cn">返回</span>
-        </button>
-        <div id="modal-content" class="legal-text text-white/70"></div>
-    </div>
+    <div id="rf" class="modal"><div class="modal-inner"><span style="float:right; cursor:pointer;" onclick="hide('rf')">✖</span><h2 id="t-m1-t">Возврат</h2><p id="t-m1-p">Текст возврата...</p></div></div>
+    <div id="of" class="modal"><div class="modal-inner"><span style="float:right; cursor:pointer;" onclick="hide('of')">✖</span><h2 id="t-m2-t">Оферта</h2><p id="t-m2-p">Текст оферты...</p></div></div>
+    <div id="pr" class="modal"><div class="modal-inner"><span style="float:right; cursor:pointer;" onclick="hide('pr')">✖</span><h2 id="t-m3-t">Приватность</h2><p id="t-m3-p">Текст приватности...</p></div></div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        if (tg) { tg.ready(); tg.expand(); }
-
-        function setL(lang, btn) {
-            document.body.className = 'lang-' + lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        function go(plan) {
-            const url = 'https://t.me/WinVPN1_bot?start=buy_' + plan;
-            if (tg && tg.openTelegramLink) { tg.openTelegramLink(url); } 
-            else { window.location.href = url; }
-        }
-
-        function openM(type) {
-            const lang = document.body.className.replace('lang-', '');
-            const content = document.getElementById('modal-content');
-            
-            if (type === 'o') {
-                if (lang === 'ru') {
-                    content.innerHTML = `
-                        <h2>Публичная оферта</h2>
-                        <p>Настоящий документ является официальным предложением Win VPN (далее — Исполнитель) для любого физического или юридического лица (далее — Пользователь).</p>
-                        <h3>1. Предмет соглашения</h3>
-                        <p>Исполнитель предоставляет Пользователю доступ к вычислительным мощностям (VPN-серверам) для обеспечения шифрования трафика и защиты личных данных.</p>
-                        <h3>2. Порядок оплаты и доставка</h3>
-                        <p>Оплата производится в полном объеме через доступные платежные шлюзы (Lava, Robokassa и др.). Сразу после подтверждения оплаты Пользователь получает уникальный цифровой ключ доступа в Telegram-боте.</p>
-                        <h3>3. Отказ от возврата (ст. 26.1 ЗоЗПП)</h3>
-                        <p>Согласно Постановлению Правительства РФ и ст. 26.1 Закона "О защите прав потребителей", цифровой товар (ключ доступа) надлежащего качества не подлежит возврату или обмену после его передачи потребителю, так как он имеет индивидуально-определенные свойства и является программным обеспечением.</p>
-                        <h3>4. Ограничение ответственности</h3>
-                        <p>Исполнитель не несет ответственности за невозможность использования сервиса по вине интернет-провайдеров Пользователя или государственных органов. Сервис запрещено использовать для совершения противоправных действий.</p>
-                        <h3>5. Контакты</h3>
-                        <p>Email: zhenya.vovan@bk.ru<br>TG: @arsvat2</p>`;
-                } else {
-                    content.innerHTML = `
-                        <h2>Terms of Service</h2>
-                        <p>This document is a legal agreement between Win VPN (Provider) and the User.</p>
-                        <h3>1. Services</h3>
-                        <p>Provider grants access to secure proxy servers for traffic encryption. Services are provided on an "as is" basis.</p>
-                        <h3>2. Digital Delivery</h3>
-                        <p>Access keys are delivered via Telegram bot immediately after payment confirmation.</p>
-                        <h3>3. No Refund Policy</h3>
-                        <p>Due to the digital nature of the product and instant delivery, all sales are final. No refunds will be issued once the access key is generated and provided to the user.</p>
-                        <h3>4. Prohibited Use</h3>
-                        <p>Users are strictly prohibited from using the service for any illegal activities, including but not limited to spamming, hacking, or distribution of malware.</p>
-                        <h3>5. Contact Information</h3>
-                        <p>Official support: @arsvat2<br>Email: zhenya.vovan@bk.ru</p>`;
-                }
-            } else {
-                if (lang === 'ru') {
-                    content.innerHTML = `
-                        <h2>Политика конфиденциальности</h2>
-                        <h3>1. Сбор данных</h3>
-                        <p>Мы собираем только ваш Telegram ID для привязки подписки. Мы не собираем ФИО, адреса или данные банковских карт (они обрабатываются банком).</p>
-                        <h3>2. Политика No-Logs</h3>
-                        <p>Мы придерживаемся строгой политики отсутствия логов. Мы не записываем историю ваших посещений, время подключения или IP-адреса. Ваши данные шифруются протоколом AES-256.</p>
-                        <h3>3. Безопасность</h3>
-                        <p>Все данные передаются по зашифрованным каналам. Мы используем современные протоколы (VLESS/Shadowsocks) для защиты вашего трафика от перехвата.</p>
-                        <h3>4. Обращения</h3>
-                        <p>По вопросам обработки данных пишите на zhenya.vovan@bk.ru.</p>`;
-                } else {
-                    content.innerHTML = `
-                        <h2>Privacy Policy</h2>
-                        <h3>1. Data Collection</h3>
-                        <p>We only store your Telegram ID to manage your subscription. We do not collect personal names, phone numbers, or physical addresses.</p>
-                        <h3>2. Zero Logs Policy</h3>
-                        <p>We do not track, collect, or store any data related to your online activity. No browsing history, traffic destination, or IP addresses are logged.</p>
-                        <h3>3. Encryption</h3>
-                        <p>Your traffic is protected by AES-256 military-grade encryption using VLESS/Shadowsocks protocols.</p>
-                        <h3>4. Compliance</h3>
-                        <p>We comply with international data protection standards to ensure your anonymity.</p>`;
-                }
-            }
-            document.getElementById('modal').style.display = 'block';
-        }
-
-        function closeM() { document.getElementById('modal').style.display = 'none'; }
+        const langData = {
+            ru: {function hide(id) { document.getElementById(id).style.display = 'none'; }
+        
+        // Инициализация русского по умолчанию
+        setLang('ru');
     </script>
 </body>
 </html>
