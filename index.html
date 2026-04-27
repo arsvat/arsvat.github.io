@@ -13,21 +13,22 @@
             --text-white: #ffffff;
             --text-gray: #888888;
             --doc-text-gray: #cccccc;
+            --btn-disabled: #333333;
         }
 
         @keyframes fireGradient {
-            0% { background-color: #ff4500; } /* Красный */
-            25% { background-color: #ff8c00; } /* Рыжий (Темно-оранжевый) */
-            50% { background-color: #ffd700; } /* Желтый */
-            75% { background-color: #ffffff; } /* Белый */
-            100% { background-color: #ff4500; } /* Снова красный */
+            0% { background-color: #ff4500; }
+            25% { background-color: #ff8c00; }
+            50% { background-color: #ffd700; }
+            75% { background-color: #ffffff; }
+            100% { background-color: #ff4500; }
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             line-height: 1.6;
-            animation: fireGradient 10s infinite; /* Анимация фона */
+            animation: fireGradient 10s infinite;
             color: var(--text-white);
         }
 
@@ -39,7 +40,7 @@
             align-items: center; 
             padding: 25px; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для шапки */
+            background-color: rgba(0, 0, 0, 0.7);
         }
         
         .logo { 
@@ -51,15 +52,13 @@
             align-items: center;
             gap: 10px;
         }
-        .logo span { color: var(--accent-blue); }
         
-        .hero { text-align: center; padding: 60px 20px; color: #000; /* Темный текст для контраста */ }
+        .hero { text-align: center; padding: 60px 20px; color: #000; font-weight: bold; }
         .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .hero p { color: #333; font-size: 1.1rem; }
+        .hero p { color: #222; font-size: 1.2rem; }
 
         .tariffs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 40px; }
         .t-card { background: var(--card-bg); border: 1px solid #333; padding: 30px; border-radius: 16px; text-align: center; position: relative; transition: 0.3s; display: flex; flex-direction: column; }
-        .t-card:hover { transform: translateY(-5px); border-color: #444; }
         
         .t-card.premium { border: 1px solid var(--accent-gold); }
         .t-card.ultra { border: 1px solid var(--accent-ultra); background: linear-gradient(180deg, #111 0%, #1a0033 100%); }
@@ -76,16 +75,23 @@
         .features { text-align: left; font-size: 0.9rem; color: var(--text-gray); margin-bottom: 25px; min-height: 140px; }
         .features li { margin-bottom: 8px; position: relative; padding-left: 20px; list-style: none; }
         .features li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-blue); }
-        .premium .features li::before { color: var(--accent-gold); }
-        .ultra .features li::before { color: var(--accent-ultra); }
 
-        .btn { padding: 14px 25px; text-decoration: none; border-radius: 8px; display: block; font-weight: bold; transition: 0.3s; text-align: center; }
-        .btn-blue { background: var(--accent-blue); color: white; }
-        .btn-gold { background: var(--accent-gold); color: #000; }
-        .btn-ultra { background: var(--accent-ultra); color: #fff; }
+        .btn { 
+            padding: 14px 25px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            display: block; 
+            font-weight: bold; 
+            text-align: center;
+            background-color: var(--btn-disabled); 
+            color: #666; 
+            cursor: not-allowed; 
+            pointer-events: none; 
+            border: 1px solid #444;
+        }
 
         footer { 
-            background: rgba(0, 0, 0, 0.8); 
+            background: rgba(0, 0, 0, 0.9); 
             padding: 50px 20px; 
             border-top: 1px solid rgba(255, 255, 255, 0.2); 
             font-size: 0.9rem; 
@@ -94,15 +100,15 @@
             margin-top: 60px; 
         }
         .f-links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
-        .f-links button { background: none; border: none; color: var(--text-gray); cursor: pointer; text-decoration: underline; padding: 0; font-size: 0.85rem; }
-        .rekw { color: #aaa; font-size: 0.8rem; line-height: 1.4; }
+        .f-links button { background: none; border: none; color: var(--text-white); cursor: pointer; text-decoration: underline; padding: 0; font-size: 0.9rem; }
+        .rekw { color: #888; font-size: 0.8rem; line-height: 1.4; margin-top: 20px; }
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
-        .modal-content { background: #111; margin: 5% auto; padding: 40px; width: 85%; max-width: 800px; border-radius: 12px; border: 1px solid #333; color: var(--doc-text-gray); text-align: left;}
-        .close { float: right; font-size: 30px; cursor: pointer; color: #fff; }
+        .modal-content { background: #111; margin: 2% auto; padding: 40px; width: 85%; max-width: 800px; border-radius: 12px; border: 1px solid #333; color: var(--doc-text-gray); text-align: left;}
+        .close { float: right; font-size: 35px; cursor: pointer; color: #fff; line-height: 1; }
         .modal-h2 { color: #fff; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
         .modal-h3 { color: var(--accent-blue); margin-top: 20px; font-size: 1.1rem; margin-bottom: 10px; }
-        .modal p { font-size: 0.95rem; margin-bottom: 15px; }
+        .modal p { font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -128,7 +134,7 @@
                 <li>Скорость до 100 Мбит/с</li>
                 <li>1 устройство</li>
             </ul>
-            <a href="https://t.me/your_bot_link" class="btn btn-blue">Выбрать Стандарт</a>
+            <a href="#" class="btn">Временно недоступно</a>
         </div>
 
         <div class="t-card premium">
@@ -141,10 +147,10 @@
             </div>
             <ul class="features">
                 <li><strong>Пинг не выше 60мс</strong></li>
-                <li><strong>10 локаций:</strong> Япония, Россия, США, Бразилия, Германия, Франция, Испания, Италия, Португалия, Польша</li>
+                <li><strong>10 локаций мира</strong></li>
                 <li>До 3 устройств</li>
             </ul>
-            <a href="https://t.me/your_bot_link" class="btn btn-gold">Выбрать Премиум</a>
+            <a href="#" class="btn">Временно недоступно</a>
         </div>
 
         <div class="t-card ultra">
@@ -156,19 +162,18 @@
                 <div class="price-item"><span>1 год</span> <span class="amount">1800 ₽</span></div>
             </div>
             <ul class="features">
-                <li><strong>15 локаций:</strong> Великобритания, США, Россия, Франция, Германия, Нидерланды, Италия, Португалия, Польша, Испания, Китай, Япония, Индия, Канада, Южная Корея, Чехия</li>
-                <li><strong>4K поток и минимальный пинг</strong></li>
+                <li><strong>15 локаций мира</strong></li>
+                <li><strong>4K поток без буферизации</strong></li>
                 <li>До 5 устройств</li>
             </ul>
-            <a href="https://t.me/your_bot_link" class="btn btn-ultra">Выбрать Ultra</a>
+            <a href="#" class="btn">Временно недоступно</a>
         </div>
     </div>
 </div>
 
 <footer>
     <div class="contacts">
-        Email: <a href="mailto:zhenya.vovan@bk.ru" style="color:white; text-decoration:none;">zhenya.vovan@bk.ru</a> | 
-        TG: <a href="https://t.me/WinVPN_Support1" style="color:white; text-decoration:none;">@WinVPN_Support1</a>
+        Email: <a href="mailto:zhenya.vovan@bk.ru" style="color:white; text-decoration:none;">zhenya.vovan@bk.ru</a>
     </div>
     
     <div class="f-links">
@@ -181,7 +186,7 @@
     <div class="rekw">
         Ватыкин Александр Валерьевич<br>
         г. Екатеринбург, Свердловская область<br>
-        © 2026 Win VPN.
+        © 2026 Win VPN. Все права защищены.
     </div>
 </footer>
 
@@ -191,11 +196,10 @@
         <h2 class="modal-h2">Публичная оферта</h2>
         <h3 class="modal-h3">1. Предмет оферты</h3>
         <p>1.1. Исполнитель (Ватыкин Александр Валерьевич) обязуется оказать услуги по предоставлению доступа к серверам передачи данных Win VPN, а Заказчик обязуется оплатить эти услуги согласно выбранному Тарифу.</p>
-        <h3 class="modal-h3">2. Порядок оплаты и предоставления услуг</h3>
-        <p>2.1. Оплата производится в рублях РФ через лицензированные платежные агрегаторы.<br>2.2. Услуга считается оказанной в полном объеме с момента предоставления Заказчику данных (ключа) для доступа к серверу.</p>
-        <h3 class="modal-h3">3. Права и обязанности сторон</h3>
-        <p>3.1. Заказчик обязуется не использовать сервис для нарушения законов РФ, рассылки спама, взлома и распространения вредоносного ПО. 3.2. Исполнитель обязан обеспечивать работоспособность серверов за исключением периодов тех. обслуживания.</p>
-        <p><strong>Реквизиты:</strong> Ватыкин А.В. Email: zhenya.vovan@bk.ru</p>
+        <h3 class="modal-h3">2. Порядок оплаты</h3>
+        <p>2.1. Оплата производится в рублях РФ через доступные платежные системы на сайте или в Telegram-боте. Услуга считается предоставленной в момент передачи доступа (ключа).</p>
+        <h3 class="modal-h3">3. Права и обязанности</h3>
+        <p>3.1. Заказчик обязуется не использовать сервис для совершения противоправных действий. Исполнитель вправе приостановить доступ при нарушении правил.</p>
     </div>
 </div>
 
@@ -203,12 +207,10 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('m-agreement')">&times;</span>
         <h2 class="modal-h2">Пользовательское соглашение</h2>
-        <h3 class="modal-h3">1. Общие положения</h3>
-        <p>1.1. Настоящее Соглашение регулирует правила использования Сервиса Win VPN. Использование Сервиса означает полное и безусловное согласие Пользователя с условиями Соглашения.</p>
-        <h3 class="modal-h3">2. Ограничение ответственности</h3>
-        <p>2.1. Сервис предоставляется на условиях «как есть» (as is). Исполнитель не несет ответственности за временные задержки или невозможность доступа к ресурсам, вызванные действиями третьих лиц или интернет-провайдеров.</p>
-        <h3 class="modal-h3">3. Прекращение доступа</h3>
-        <p>3.1. Исполнитель оставляет за собой право ограничить доступ Пользователя в случае нарушения им правил данного Соглашения.</p>
+        <h3 class="modal-h3">1. Общие условия</h3>
+        <p>1.1. Использование сервиса Win VPN означает полное согласие с правилами. Сервис предоставляется в личных целях пользователю.</p>
+        <h3 class="modal-h3">2. Ответственность</h3>
+        <p>2.1. Исполнитель не несет ответственности за работу сторонних ресурсов и сервисов. Мы обеспечиваем только стабильность канала связи до наших серверов.</p>
     </div>
 </div>
 
@@ -216,25 +218,21 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('m-privacy')">&times;</span>
         <h2 class="modal-h2">Политика конфиденциальности</h2>
-        <h3 class="modal-h3">1. Сбор и обработка информации</h3>
-        <p>1.1. Мы придерживаемся политики <strong>No-Logs</strong>: мы не храним и не записываем историю посещений, используемые IP-адреса и передаваемый трафик Пользователей.<br>
-        1.2. Для функционирования Сервиса используется только технический ID Telegram и/или Email для привязки подписки.</p>
-        <h3 class="modal-h3">2. Использование Сookie</h3>
-        <p>2.1. Мы используем файлы cookie исключительно для технического обеспечения безопасности сессий Пользователей на данном Сайте.</p>
-        <h3 class="modal-h3">3. Безопасность</h3>
-        <p>3.1. Все данные, передаваемые через Сервис, защищены современными алгоритмами шифрования. Мы не передаем информацию о Пользователях третьим лицам.</p>
+        <h3 class="modal-h3">1. Принципы обработки данных</h3>
+        <p>1.1. Мы придерживаемся строгой политики <strong>No-Logs</strong>. Мы не собираем, не храним и не передаем третьим лицам данные о вашем трафике, посещенных сайтах и загруженных файлах.</p>
+        <h3 class="modal-h3">2. Технические данные</h3>
+        <p>2.1. Для работы подписки нам необходим только ваш уникальный идентификатор (Telegram ID) или адрес электронной почты. Эти данные используются исключительно для авторизации.</p>
     </div>
 </div>
 
 <div id="m-refund" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('m-refund')">&times;</span>
-        <h2 class="modal-h2">Порядок возврата денежных средств</h2>
-        <h3 class="modal-h3">1. Условия и сроки возврата</h3>
-        <p>1.1. Пользователь имеет право на возврат денежных средств в течение <strong>14 календарных дней</strong> с даты оплаты услуги.<br>
-        1.2. Возврат осуществляется в случае, если Пользователь не смог воспользоваться Сервисом по доказанной технической вине Исполнителя.</p>
-        <h3 class="modal-h3">2. Порядок подачи заявки</h3>
-        <p>2.1. Для оформления возврата необходимо отправить письмо на адрес <strong>zhenya.vovan@bk.ru</strong> с указанием даты платежа и причины возврата. Срок рассмотрения заявки — до 10 рабочих дней. 2.2. Денежные средства возвращаются на ту же банковскую карту или счет, с которых была произведена оплата.</p>
+        <h2 class="modal-h2">Условия возврата денежных средств</h2>
+        <h3 class="modal-h3">1. Сроки возврата</h3>
+        <p>1.1. Заказчик вправе запросить возврат денежных средств в течение <strong>14 календарных дней</strong> с момента первой оплаты, если услуга не была оказана надлежащим образом.</p>
+        <h3 class="modal-h3">2. Порядок обращения</h3>
+        <p>2.1. Для возврата необходимо направить письмо на <strong>zhenya.vovan@bk.ru</strong>. В письме укажите дату транзакции и причину. Средства возвращаются на тот же счет в течение 10 рабочих дней.</p>
     </div>
 </div>
 
