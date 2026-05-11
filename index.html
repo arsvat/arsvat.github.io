@@ -3,237 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Win VPN — Официальный сайт</title>
+    <title>Godzilla VPN — Официальный сайт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --card-bg: #111111;
-            --accent-blue: #0088cc;
-            --accent-gold: #ffd700;
-            --accent-ultra: #7000ff;
-            --text-white: #ffffff;
-            --text-gray: #888888;
-            --doc-text-gray: #cccccc;
-        }
-
-        @keyframes fireGradient {
-            0% { background-color: #ff4500; }
-            25% { background-color: #ff8c00; }
-            50% { background-color: #ffd700; }
-            75% { background-color: #ffffff; }
-            100% { background-color: #ff4500; }
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            animation: fireGradient 10s infinite;
-            color: var(--text-white);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        :root { --accent: #22c55e; --bg: #050505; --card-bg: rgba(20, 20, 20, 0.75); --text-main: #ffffff; --text-dim: #a1a1aa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        header { padding: 25px 0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+        .logo span { color: var(--accent); }
+        .hero { text-align: center; padding: 60px 0; }
+        .hero h1 { font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: -2px; margin-bottom: 20px; }
+        .mission-box { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 32px; margin-bottom: 50px; }
+        .tariffs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .t-card { background: var(--card-bg); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); text-align: center; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+        .t-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .price { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin: 10px 0; }
+        .btn { display: block; padding: 14px; background: var(--accent); color: #000; text-decoration: none; border-radius: 14px; font-weight: 700; margin-top: 15px; }
+        footer { padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .f-links { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .f-links button { background: none; border: none; color: var(--accent); cursor: pointer; text-decoration: underline; font-weight: 600; font-size: 0.8rem; }
         
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 25px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        
-        .logo { 
-            font-size: 2rem; 
-            font-weight: bold; 
-            color: var(--text-white); 
-            text-decoration: none; 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo span { color: var(--accent-blue); }
-        
-        .hero { text-align: center; padding: 60px 20px; color: #000; font-weight: bold; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .hero p { color: #222; font-size: 1.2rem; }
-
-        .tariffs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 40px; }
-        .t-card { background: var(--card-bg); border: 1px solid #333; padding: 30px; border-radius: 16px; text-align: center; position: relative; transition: 0.3s; display: flex; flex-direction: column; }
-        .t-card:hover { transform: translateY(-5px); border-color: #444; }
-        
-        .t-card.premium { border: 1px solid var(--accent-gold); }
-        .t-card.ultra { border: 1px solid var(--accent-ultra); background: linear-gradient(180deg, #111 0%, #1a0033 100%); }
-        
-        .badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; color: #000; }
-        .badge-gold { background: var(--accent-gold); }
-        .badge-ultra { background: var(--accent-ultra); color: #fff; }
-        
-        .card-title { font-size: 1.5rem; margin-top: 10px; margin-bottom: 15px; }
-        .price-list { text-align: left; margin: 20px 0; padding: 0; list-style: none; flex-grow: 1; }
-        .price-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; }
-        .amount { font-weight: bold; color: var(--text-white); }
-
-        .features { text-align: left; font-size: 0.9rem; color: var(--text-gray); margin-bottom: 25px; min-height: 140px; }
-        .features li { margin-bottom: 8px; position: relative; padding-left: 20px; list-style: none; }
-        .features li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-blue); }
-        .premium .features li::before { color: var(--accent-gold); }
-        .ultra .features li::before { color: var(--accent-ultra); }
-
-        .btn { padding: 14px 25px; text-decoration: none; border-radius: 8px; display: block; font-weight: bold; transition: 0.3s; text-align: center; }
-        .btn-blue { background: var(--accent-blue); color: white; }
-        .btn-gold { background: var(--accent-gold); color: #000; }
-        .btn-ultra { background: var(--accent-ultra); color: #fff; }footer { 
-            background: rgba(0, 0, 0, 0.8); 
-            padding: 50px 20px; 
-            border-top: 1px solid rgba(255, 255, 255, 0.2); 
-            font-size: 0.9rem; 
-            color: var(--text-gray); 
-            text-align: center; 
-            margin-top: 60px; 
-        }
-        .f-links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
-        .f-links button { background: none; border: none; color: var(--text-gray); cursor: pointer; text-decoration: underline; padding: 0; font-size: 0.85rem; }
-        .rekw { color: #aaa; font-size: 0.8rem; line-height: 1.4; }
-
+        /* Modal Styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
-        .modal-content { background: #111; margin: 5% auto; padding: 40px; width: 85%; max-width: 800px; border-radius: 12px; border: 1px solid #333; color: var(--doc-text-gray); text-align: left;}
-        .close { float: right; font-size: 30px; cursor: pointer; color: #fff; }
-        .modal-h2 { color: #fff; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .modal-h3 { color: var(--accent-blue); margin-top: 20px; font-size: 1.1rem; margin-bottom: 10px; }
-        .modal p { font-size: 0.95rem; margin-bottom: 15px; }
+        .modal-content { background: #111; margin: 20px auto; padding: 30px; width: 95%; max-width: 900px; border-radius: 24px; border: 1px solid #333; color: #ccc; font-size: 0.85rem; line-height: 1.6; position: relative; }
+        .close { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: #fff; }
+        .modal h2 { color: var(--accent); margin-bottom: 15px; font-size: 1.3rem; text-align: center; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .modal h3 { color: #fff; margin: 20px 0 8px; font-size: 1rem; }
+        .modal p { margin-bottom: 8px; text-align: left; }
+        .modal-scroll { max-height: 80vh; overflow-y: auto; padding-right: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="#" class="logo">🔥 WIN <span>VPN</span></a>
-</header>
-
 <div class="container">
+    <header>
+        <a href="#" class="logo">🦖 GODZILLA<span>VPN</span></a>
+        <a href="https://t.me/GodzillaVPN_Support" class="btn" style="margin:0; padding: 10px 25px;">Поддержка</a>
+    </header>
+
     <section class="hero">
-        <h1>Тарифные планы Win VPN</h1>
-        <p>Надёжный доступ к свободному интернету на максимальных скоростях.</p>
+        <h1>Твой интернет под защитой Годзиллы</h1>
+        <div class="mission-box">
+            <h2>Наша миссия</h2>
+            <p><strong>Godzilla VPN</strong> — это мощный инструмент для тех, кто ценит свободу. Мы обеспечиваем шифрование по военным стандартам и полную анонимность.</p>
+        </div>
     </section>
 
     <div class="tariffs-grid">
-        <div class="t-card">
-            <h2 class="card-title">Стандарт</h2>
-            <div class="price-list">
-                <div class="price-item"><span>1 месяц</span> <span class="amount">99 ₽</span></div>
-            </div>
-            <ul class="features">
-                <li>Общие серверы</li>
-                <li>Скорость до 100 Мбит/с</li>
-                <li>1 устройство</li>
-            </ul>
-            <a href="https://t.me/WinVPN_Support1" class="btn btn-blue">Выбрать Стандарт</a>
-        </div>
-
-        <div class="t-card premium">
-            <div class="badge badge-gold">ПОПУЛЯРНЫЙ</div>
-            <h2 class="card-title" style="color: var(--accent-gold);">Премиум</h2>
-            <div class="price-list">
-                <div class="price-item"><span>1 месяц</span> <span class="amount">150 ₽</span></div>
-                <div class="price-item"><span>3 месяца</span> <span class="amount">400 ₽</span></div>
-                <div class="price-item"><span>1 год</span> <span class="amount">1500 ₽</span></div>
-            </div>
-            <ul class="features">
-                <li><strong>Пинг не выше 60мс</strong></li>
-                <li><strong>10 локаций:</strong> Япония, Россия, США, Бразилия, Германия, Франция, Испания, Италия, Португалия, Польша</li>
-                <li>До 3 устройств</li>
-            </ul>
-            <a href="https://t.me/WinVPN_Support1" class="btn btn-gold">Выбрать Премиум</a>
-        </div>
-
-        <div class="t-card ultra">
-            <div class="badge badge-ultra">МАКСИМУМ</div>
-            <h2 class="card-title" style="color: var(--accent-ultra);">Ultra</h2>
-            <div class="price-list">
-                <div class="price-item"><span>1 месяц</span> <span class="amount">200 ₽</span></div>
-                <div class="price-item"><span>3 месяца</span> <span class="amount">500 ₽</span></div>
-                <div class="price-item"><span>1 год</span> <span class="amount">1800 ₽</span></div>
-            </div>
-            <ul class="features">
-                <li><strong>15 локаций:</strong> Великобритания, США, Россия, Франция, Германия, Нидерланды, Италия, Португалия, Польша, Испания, Китай, Япония, Индия, Канада, Южная Корея, Чехия</li><li><strong>4K поток и минимальный пинг</strong></li>
-                <li>До 5 устройств</li>
-            </ul>
-            <a href="https://t.me/WinVPN_Support1" class="btn btn-ultra">Выбрать Ultra</a>
-        </div>
+        <div class="t-card"><h3>1 месяц</h3><div class="price">60 ₽</div><a href="https://t.me/GodzillaVPN_Support" class="btn">Купить</a></div>
+        <div class="t-card" style="border-color: var(--accent);"><h3>3 месяца</h3><div class="price">170 ₽</div><a href="https://t.me/GodzillaVPN_Support" class="btn">Купить</a></div>
+        <div class="t-card"><h3>1 год</h3><div class="price">600 ₽</div><a href="https://t.me/GodzillaVPN_Support" class="btn">Купить</a></div>
+        <div class="t-card"><h3>Бесплатно</h3><div class="price">0 ₽</div><p style="font-size: 0.7rem; color: var(--text-dim);">За рекламу</p><a href="https://t.me/GodzillaVPN_Support" class="btn">Смотреть</a></div>
     </div>
+
+    <footer>
+        <div class="f-links">
+            <button onclick="openModal('m-terms')">Соглашение</button>
+            <button onclick="openModal('m-offer')">Оферта</button>
+            <button onclick="openModal('m-privacy')">Конфиденциальность</button>
+            <button onclick="openModal('m-refund')">Возврат средств</button>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-dim);">
+            Исполнитель: Ватыкин Андрей Валерьевич | ИНН: 662006364108<br>
+            © 2026 Godzilla VPN
+        </p>
+    </footer>
 </div>
 
-<footer>
-    <div class="contacts">
-        Email: <a href="mailto:zhenya.vovan@bk.ru" style="color:white; text-decoration:none;">zhenya.vovan@bk.ru</a> | 
-        TG: <a href="https://t.me/WinVPN_Support1" style="color:white; text-decoration:none;">@WinVPN_Support1</a>
-    </div>
-    
-    <div class="f-links">
-        <button onclick="openModal('m-oferta')">Публичная оферта</button>
-        <button onclick="openModal('m-agreement')">Пользовательское соглашение</button>
-        <button onclick="openModal('m-privacy')">Конфиденциальность</button>
-        <button onclick="openModal('m-refund')">Условия возврата</button>
-    </div>
-
-    <div class="rekw">
-        Исполнитель: Ватыкин Александр Валерьевич<br>
-        ИНН: 662006364108<br>
-        © 2026 Win VPN.
-    </div>
-</footer>
-
-<div id="m-oferta" class="modal">
+<!-- 1. ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ (13 ПУНКТОВ) -->
+<div id="m-terms" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('m-oferta')">&times;</span>
-        <h2 class="modal-h2">Публичная оферта</h2>
-        <h3 class="modal-h3">1. Предмет оферты</h3>
-        <p>1.1. Исполнитель (Ватыкин Александр Валерьевич, ИНН 662006364108) обязуется оказать услуги по предоставлению доступа к серверам передачи данных Win VPN, а Заказчик обязуется оплатить эти услуги согласно выбранному Тарифу.</p>
-        <h3 class="modal-h3">2. Порядок оплаты и предоставления услуг</h3>
-        <p>2.1. Оплата производится в рублях РФ через лицензированные платежные агрегаторы.<br>2.2. Услуга считается оказанной в полном объеме с момента предоставления Заказчику данных (ключа) для доступа к серверу.</p>
-        <h3 class="modal-h3">3. Права и обязанности сторон</h3>
-        <p>3.1. Заказчик обязуется не использовать сервис для нарушения законов РФ, рассылки спама, взлома и распространения вредоносного ПО. 3.2. Исполнитель обязан обеспечивать работоспособность серверов за исключением периодов тех. обслуживания.</p>
-        <p><strong>Поддержка:</strong> @WinVPN_Support1 | Email: zhenya.vovan@bk.ru</p>
+        <span class="close" onclick="closeModal('m-terms')">&times;</span>
+        <h2>Пользовательское соглашение</h2>
+        <div class="modal-scroll">
+            <p>Обновлено: 16 марта 2026 г.</p>
+            <h3>1. Общие положения</h3>
+            <p>1.1. Настоящее Соглашение регулирует отношения между Ватыкиным Андреем Валерьевичем (ИНН 662006364108), самозанятым, владельцем сервиса «Godzilla VPN» (далее — «Администрация»), и пользователем (далее — «Пользователь»).</p>
+            <p>1.2. Сервис — программный комплекс для шифрования трафика.</p>
+            <p>1.3. Использование Сервиса — полное согласие с условиями.</p>
+            <p>1.4. Администрация вправе изменять Соглашение без уведомления.</p>
+            <p>1.5. Продолжение использования — согласие с изменениями.</p>
+            <h3>2. Описание Сервиса</h3>
+            <p>2.1. Шифрование интернет-трафика (VPN).</p>
+            <p>2.2. Защита данных в любых сетях.</p>
+            <p>2.3. Протоколы: VLESS + Reality, TLS 1.3.</p>
+            <p>2.4. Доступ через ключ в @GodzillaVPN_Support.</p>
+            <p>2.5. Сторонние приложения (v2RayTun, FoXray и др.).</p>
+            <p>2.6. Администрация не отвечает за сторонний софт.</p>
+            <h3>3. Регистрация</h3>
+            <p>3.1. Через Telegram-бот или сайт.</p>
+            <p>3.2. Идентификация по Telegram ID.</p>
+            <p>3.3. Достоверные данные при регистрации.</p>
+            <p>3.4. Один пользователь — один аккаунт.</p>
+            <p>3.5. Ответственность за ключи на Пользователе.</p>
+            <p>3.6. Передача ключа запрещена.</p>
+            <h3>4. Условия использования</h3>
+            <p>4.1. Права: шифрование, устройства по тарифу, техподдержка, бесплатный доступ за рекламу.</p>
+            <p>4.2. Обязанности: не нарушать законы РФ, не слать спам, не делать DDoS.</p>
+            <p>4.3. Администрация вправе блокировать за нарушения.</p>
+            <h3>5. Оплата</h3>
+            <p>5.1. Тарифы на сайте/в боте.</p>
+            <p>5.2. Оплата: карты, СБП, Stars, крипто.</p>
+            <p>5.3. Активация автоматическая.</p>
+            <p>5.4. Бесплатный доступ за рекламу.</p>
+            <p>5.5. Возврат согласно Оферте.</p>
+            <h3>6. Ответственность</h3>
+            <p>6.1. Администрация не отвечает за действия Пользователя.</p>
+            <p>6.2. Не отвечает за перебои оборудования.</p>
+            <p>6.3. Скорость максимально возможная.</p>
+            <p>6.4. Ответственность Пользователя перед третьими лицами.</p>
+            <p>6.5. Блокировка за нарушения без возврата.</p>
+            <p>6.6. Ответственность в пределах цены тарифа.</p>
+            <h3>7. Интеллектуальная собственность</h3>
+            <p>7.1. «Godzilla VPN» — собственность Администрации.</p>
+            <p>7.2. Копирование материалов запрещено.</p>
+            <p>7.3. Лицензия только для личных целей.</p>
+            <h3>8. Блокировка</h3>
+            <p>8.1. За нарушения Соглашения или нагрузку.</p>
+            <p>8.2. Удаление аккаунта через бот.</p>
+            <p>8.3. Срок удаления — 30 дней.</p>
+            <p>8.4. Без возврата средств при бане.</p>
+            <h3>9. Реферальная программа</h3>
+            <p>9.1. Бонусы за рефералов.</p>
+            <p>9.2. Условия меняются Администрацией.</p>
+            <p>9.3. Запрещен спам.</p>
+            <p>9.4. Накрутки ведут к блокировке.</p>
+            <h3>10. Споры</h3>
+            <p>10.1. Право РФ.</p>
+            <p>10.2. Переговоры.</p>
+            <p>10.3. Претензия на email. Ответ 10 дней.</p>
+            <p>10.4. Суд по месту Администрации.</p>
+            <h3>11. Финал</h3>
+            <p>11.1. Действует с начала использования.</p>
+            <p>11.2. Недействительность части не отменяет остальное.</p>
+            <p>11.3. Бездействие не означает отказ от прав.</p>
+            <p>11.4. Регулируется законами РФ.</p>
+            <h3>12. Контакты</h3>
+            <p>Ватыкин А.В., ИНН 662006364108, @GodzillaVPN_Support.</p>
+            <h3>13. Дата публикации</h3>
+            <p>13.1. 16 марта 2026 года.</p>
+        </div>
     </div>
 </div>
 
-<div id="m-agreement" class="modal">
+<!-- 2. ПУБЛИЧНАЯ ОФЕРТА (12 ПУНКТОВ) -->
+<div id="m-offer" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('m-agreement')">&times;</span>
-        <h2 class="modal-h2">Пользовательское соглашение</h2>
-        <h3 class="modal-h3">1. Общие положения</h3>
-        <p>1.1. Настоящее Соглашение регулирует правила использования Сервиса Win VPN. Использование Сервиса означает полное и безусловное согласие Пользователя с условиями Соглашения.</p>
-        <h3 class="modal-h3">2. Ограничение ответственности</h3>
-        <p>2.1. Сервис предоставляется на условиях «как есть» (as is). Исполнитель не несет ответственности за временные задержки или невозможность доступа к ресурсам, вызванные действиями третьих лиц или интернет-провайдеров.</p>
+        <span class="close" onclick="closeModal('m-offer')">&times;</span>
+        <h2>Публичная оферта</h2>
+        <div class="modal-scroll">
+            <p>Обновлено: 16 марта 2026 г.</p>
+            <h3>1. Общие положения</h3>
+            <p>1.1. Оферта согласно ст. 435 и 437 ГК РФ.</p>
+            <p>1.2. Акцепт — оплата или регистрация.</p>
+            <p>1.3. Исполнитель — Ватыкин Андрей Валерьевич.</p>
+            <p>1.4. Заказчик — физлицо.</p>
+            <p>1.5. Сервис шифрует трафик.</p>
+            <p>1.6. Полное согласие.</p>
+            <h3>2. Предмет</h3>
+            <p>2.1. Доступ к «Godzilla VPN».</p>
+            <p>2.2. Шифрование и защита.</p>
+            <p>2.3. Доступ через ключ.</p>
+            <p>2.4. Современные стандарты защиты.</p>
+            <h3>3. Тарифы</h3>
+            <p>3.1. 60р/170р/320р/600р. Бесплатно за рекламу.</p>
+            <p>3.2. Изменение тарифов за 7 дней.</p>
+            <p>3.3. Карты, СБП, крипто.</p>
+            <p>3.4. Оплата при зачислении.</p>
+            <p>3.5. Чек по ФЗ-422.</p>
+            <h3>4. Оказание услуг</h3>
+            <p>4.1. Активация сразу после оплаты.</p>
+            <p>4.2. Выдача через @GodzillaVPN_Support.</p>
+            <p>4.3. Ключ персональный.</p>
+            <p>4.4. Доступность 24/7.</p>
+            <p>4.5. Техработы с уведомлением.</p>
+            <h3>5. Права сторон</h3>
+            <p>5.1. Исполнитель обеспечивает работу.</p>
+            <p>5.2. Исполнитель вправе блокировать за спам/атаки.</p>
+            <p>5.3. Заказчик соблюдает закон РФ.</p>
+            <p>5.4. Заказчик не передает ключ.</p>
+            <h3>6. Возврат</h3>
+            <p>6.1. Возврат в течение 14 дней.</p>
+            <p>6.2. На те же реквизиты.</p>
+            <p>6.3. Частичный возврат невозможен.</p>
+            <p>6.4. Через поддержку в боте.</p>
+            <p>6.5. Срок 10 дней.</p>
+            <p>6.6. Бесплатный доступ не возвращается.</p>
+            <h3>7. Ответственность</h3>
+            <p>7.1. «Как есть».</p>
+            <p>7.2. Без гарантии скорости.</p>
+            <p>7.3. Без ответственности за действия Заказчика.</p>
+            <p>7.4. Без ответственности за провайдеров.</p>
+            <p>7.5. Лимит ответственности — цена тарифа.</p>
+            <h3>8. Конфиденциальность</h3>
+            <p>8.1. Логи не ведутся.</p>
+            <p>8.2. Трафик не пишем.</p>
+            <p>8.3. Храним ID и факт оплаты.</p>
+            <h3>9. Срок действия</h3>
+            <p>9.1. Бессрочно. 9.2. Изменения при публикации.</p>
+            <h3>10. Споры</h3>
+            <p>10.1. Переговоры. 10.2. Претензия обязательна. 10.3. Ответ 10 дней.</p>
+            <h3>11. Реквизиты</h3>
+            <p>Ватыкин Андрей Валерьевич. ИНН 662006364108.</p>
+            <h3>12. Дата</h3>
+            <p>12.1. 16 марта 2026 года.</p>
+        </div>
     </div>
 </div>
 
+<!-- 3. ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (15 ПУНКТОВ) -->
 <div id="m-privacy" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('m-privacy')">&times;</span>
-        <h2 class="modal-h2">Политика конфиденциальности</h2>
-        <h3 class="modal-h3">1. Сбор и обработка информации</h3>
-        <p>1.1. Мы придерживаемся политики <strong>No-Logs</strong>: мы не храним и не записываем историю посещений Пользователей.<br>
-        1.2. Для функционирования Сервиса используется только технический ID Telegram для идентификации подписки.</p>
-        <h3 class="modal-h3">2. Безопасность</h3>
-        <p>2.1. Все данные защищены шифрованием. Мы не передаем информацию о Пользователях третьим лицам.</p>
+        <h2>Политика конфиденциальности</h2>
+        <div class="modal-scroll">
+            <p>Обновлено: 16 марта 2026 г.</p>
+            <h3>1. Общие положения</h3>
+            <p>1.1. Порядок обработки данных в «Godzilla VPN».</p>
+            <p>1.2. Соответствует ФЗ-152.</p>
+            <p>1.3. Использование = согласие.</p>
+            <p>1.4. Несогласие = отказ.</p>
+            <p>1.5. Оператор: Ватыкин Андрей Валерьевич.</p>
+            <h3>2. Данные</h3>
+            <p>2.1. Telegram ID, Email, Платежные данные.</p>
+            <p>2.2. ОС, время, объем трафика, IP сайта.</p>
+            <p>2.3. НЕ собираем: историю, трафик, DNS, запросы.</p>
+            <p>2.4. Нулевые логи.</p>
+            <h3>3. Цели</h3>
+            <p>3.1. Работа. 3.2. Поддержка. 3.3. Чеки. 3.4. Инфо. 3.5. Исправление багов. 3.6. Улучшение. 3.7. Закон.</p>
+            <h3>4. Основания</h3>
+            <p>4.1. Согласие. 4.2. Оферта. 4.3. Закон РФ.</p>
+            <h3>5. Обработка</h3>
+            <p>5.1. Автоматизация. 5.2. Серверы. 5.3. Защита.</p>
+            <h3>6. Передача</h3>
+            <p>6.1. Без продажи. 6.2. По согласию. 6.3. Платежам. 6.4. Гос. органам.</p>
+            <h3>7. Cookie</h3>
+            <p>7.1. Работа. 7.2. Яндекс.Метрика. 7.3. Реклама РСЯ. 7.4. Отключение в браузере.</p>
+            <h3>8. Реклама</h3>
+            <p>8.1. РСЯ. 8.2. Rewarded за доступ. 8.3. Добровольно. 8.4. Политика Яндекса.</p>
+            <h3>9. Хранение</h3>
+            <p>9.1. ID — активный период + 30 дней. 9.2. Платежи — 4 года. 9.3. Техлоги — 24ч. 9.4. Активность — нет.</p>
+            <h3>10. Права</h3>
+            <p>10.1. Знать. 10.2. Править. 10.3. Отзывать. 10.4. РКН. 10.5. Связь в боте.</p>
+            <h3>11. Защита</h3>
+            <p>11.1. TLS 1.3. 11.2. Доступ Оператору. 11.3. Обновление ПО. 11.4. VLESS + Reality.</p>
+            <h3>12. Несовершеннолетние</h3>
+            <p>12.1. 18+. 12.2. Не собираем данные детей. 12.3. Удаляем при нахождении.</p>
+            <h3>13. Изменения</h3>
+            <p>13.1. Право Оператора. 13.2. При публикации. 13.3. Согласие. 13.4. Самопроверка.</p>
+            <h3>14. Контакты</h3>
+            <p>Ватыкин А.В., ИНН 662006364108, @GodzillaVPN_Support.</p>
+            <h3>15. Дата</h3>
+            <p>15.1. 16 марта 2026 года.</p>
+        </div>
     </div>
 </div>
 
+<!-- 4. ПОРЯДОК ВОЗВРАТА СРЕДСТВ (6 ПУНКТОВ) -->
 <div id="m-refund" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('m-refund')">&times;</span><h2 class="modal-h2">Порядок возврата денежных средств</h2>
-        <h3 class="modal-h3">1. Условия и сроки возврата</h3>
-        <p>1.1. Пользователь имеет право на возврат в течение <strong>14 календарных дней</strong> с даты оплаты услуги.<br>
-        1.2. Возврат осуществляется в случае технических неполадок на стороне Сервиса.</p>
-        <h3 class="modal-h3">2. Порядок подачи заявки</h3>
-        <p>2.1. Для оформления возврата напишите нам: <strong>@WinVPN_Support1</strong> или на почту zhenya.vovan@bk.ru.</p>
+        <span class="close" onclick="closeModal('m-refund')">&times;</span>
+        <h2>Порядок возврата денежных средств</h2>
+        <div class="modal-scroll">
+            <p>Обновлено: 18 марта 2026 г.</p>
+            <h3>1. Общие положения</h3>
+            <p>1.1. Настоящий документ определяет порядок возврата за услуги «Godzilla VPN».</p>
+            <p>1.2. Исполнитель — Ватыкин Андрей Валерьевич, ИНН 662006364108, самозанятый.</p>
+            <p>1.3. Возврат согласно Закону РФ «О защите прав потребителей» и оферте.</p>
+            
+            <h3>2. Условия возврата</h3>
+            <p>2.1. Возврат возможен в течение 14 календарных дней с момента оплаты.</p>
+            <p>2.2. Возврат в полном объёме на те же реквизиты.</p>
+            <p>2.3. Частичный возврат не производится.</p>
+            <p>2.4. Бесплатный доступ (за просмотр рекламы) возврату не подлежит.</p>
+            
+            <h3>3. Порядок оформления</h3>
+            <p>3.1. Обращение через Telegram-бот @GodzillaVPN_Support или email AndreyCOVBON@yandex.ru.</p>
+            <p>3.2. В заявке указать: Telegram ID, дату и сумму, причину возврата.</p>
+            <p>3.3. Срок обработки — до 10 рабочих дней.</p>
+            <p>3.4. Возврат только на те реквизиты, с которых была оплата.</p>
+            
+            <h3>4. Случаи отказа</h3>
+            <p>4.1. Прошло более 14 дней. Аккаунт забанен за нарушения. Нет данных для идентификации платежа. Бесплатный доступ.</p>
+            
+            <h3>5. Технические неполадки</h3>
+            <p>5.1. Если сервис не работал по вине Исполнителя более 24 часов подряд — полный возврат за простой или продление подписки.</p>
+            <p>5.2. Перебои менее 24 часов (техработы или сбои третьих лиц) — не основание для возврата.</p>
+            
+            <h3>6. Контактная информация</h3>
+            <p>Ватыкин Андрей Валерьевич. ИНН: 662006364108. Email: AndreyCOVBON@yandex.ru. Telegram: @GodzillaVPN_Support.</p>
+        </div>
     </div>
 </div>
 
 <script>
-    function openModal(id) { document.getElementById(id).style.display = "block"; }
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
-    window.onclick = function(event) { if (event.target.className === 'modal') { event.target.style.display = "none"; } }
+    function openModal(id) { document.getElementById(id).style.display = "block"; document.body.style.overflow = "hidden"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
+    window.onclick = function(e) { if (e.target.className === 'modal') closeModal(e.target.id); }
 </script>
 
 </body>
